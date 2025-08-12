@@ -1,0 +1,12 @@
+# Gradle specific
+.gradle/
+build/
+.project
+.classpath
+.settings/
+# Java specific
+*.class
+*.jar
+*.war
+*.zip
+*.tar.gz
