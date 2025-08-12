@@ -1,0 +1,14 @@
+CREATE TABLE users (
+    id BIGSERIAL PRIMARY KEY,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    pw_hash VARCHAR(255) NOT NULL,
+    nickname VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE user_roles (
+    user_id BIGINT NOT NULL,
+    role VARCHAR(255) NOT NULL,
+    PRIMARY KEY (user_id, role),
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);

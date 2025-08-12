@@ -32,7 +32,7 @@ services:
     restart: always
 
   gateway:
-    image: nginx:latest
+    image: nginx:stable
     ports:
       - "80:80"
     volumes:
