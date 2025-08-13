@@ -1,14 +1,12 @@
 # Build stage
-FROM gradle:8.5.0-jdk17-jammy AS build
+FROM gradle:8.9-jdk21 AS build
 WORKDIR /home/gradle/src
 COPY build.gradle .
 COPY src ./src
 RUN gradle build --no-daemon
-RUN find /home/gradle/src/build/libs -type f -name '*.jar'
 
 # Package stage
-FROM openjdk:17-jdk-slim
-RUN apt-get update && apt-get install -y unzip
+FROM eclipse-temurin:21-jre-jammy
 WORKDIR /app
 COPY --from=build /home/gradle/src/build/libs/auth-service-0.0.1-SNAPSHOT.jar app.jar
-ENTRYPOINT ["java","-jar","/app.jar"]
+ENTRYPOINT ["java","-XX:MaxRAMPercentage=75.0","-jar","/app/app.jar"]

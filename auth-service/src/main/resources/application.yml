@@ -1,12 +1,9 @@
 spring:
   datasource:
-    url: ${DB_URL}
-    username: ${DB_USER}
-    password: ${DB_PASS}
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
-      ddl-auto: update # For development, will be managed by Flyway later
+      ddl-auto: validate
     show-sql: true
     properties:
       hibernate:
@@ -16,10 +13,8 @@ spring:
     locations: classpath:db/migration
 
 jwt:
-  secret: ${JWT_SECRET}
-  expiration: 3600000 # 1 hour in milliseconds
-  refresh-expiration: 604800000 # 7 days in milliseconds
-  issuer: ${JWT_ISSUER}
+  issuer: http://auth.local
+  secret: ${JWT_SECRET:change-me}
 
 logging:
   pattern:

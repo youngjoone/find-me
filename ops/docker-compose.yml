@@ -48,8 +48,11 @@ services:
     build: ../auth-service
     ports:
       - "8080:8080"
-    env_file:
-      - ../auth-service/.env
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db-auth:5432/auth
+      - SPRING_DATASOURCE_USERNAME=auth
+      - SPRING_DATASOURCE_PASSWORD=authpass
+      - JWT_SECRET=please-change-me-this-is-a-long-secret-key-for-hs256
     restart: always
 
   profile-service:
@@ -61,16 +64,16 @@ services:
     restart: always
 
   payment-service:
-    build:
-      context: ../payment-service
-      target: build
+    build: ../payment-service
     ports:
       - "8081:8081"
-    env_file:
-      - ../payment-service/.env
-    volumes:
-      - ../payment-service:/home/gradle/src
-    command: sh -c "gradle bootRun"
+    environment:
+      - SERVER_PORT=8081
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db-payment:5432/payment
+      - SPRING_DATASOURCE_USERNAME=payment
+      - SPRING_DATASOURCE_PASSWORD=paymentpass
+      - SPRING_FLYWAY_ENABLED=true
+    restart: always
 
   web:
     build: ../web
