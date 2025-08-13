@@ -48,36 +48,34 @@ services:
     build: ../auth-service
     ports:
       - "8080:8080"
-    environment:
-      - DB_URL=jdbc:postgresql://db-auth:5432/auth
-      - DB_USER=auth
-      - DB_PASS=authpass
-      - JWT_ISSUER=http://auth.local
-      - JWT_PRIVATE_KEY_PEM=-----BEGIN PRIVATE KEY-----... (dev only)
+    env_file:
+      - ../auth-service/.env
     restart: always
 
   profile-service:
     build: ../profile-service
     ports:
       - "8000:8000"
-    environment:
-      - DB_URL=postgresql+psycopg://profile:profilepass@db-profile:5432/profile
-      - OPENAI_API_KEY=sk-...
-      - EMBEDDING_MODEL=text-embedding-3-large
-      - JWKS_URL=http://auth-service:8080/.well-known/jwks.json
-      - JWT_AUDIENCE=profile-service
+    env_file:
+      - ../profile-service/.env
     restart: always
 
   payment-service:
-    build: ../payment-service
+    build:
+      context: ../payment-service
+      target: build
     ports:
       - "8081:8081"
-    restart: always
+    env_file:
+      - ../payment-service/.env
+    volumes:
+      - ../payment-service:/home/gradle/src
+    command: sh -c "gradle bootRun"
 
   web:
     build: ../web
     ports:
       - "3000:3000"
-    environment:
-      - NEXT_PUBLIC_API_BASE=http://localhost
+    env_file:
+      - ../web/.env.local
     restart: always
