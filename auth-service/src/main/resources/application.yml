@@ -13,8 +13,10 @@ spring:
     locations: classpath:db/migration
 
 jwt:
-  issuer: http://auth.local
+  issuer: ${JWT_ISSUER:http://auth.local}
   secret: ${JWT_SECRET:change-me}
+  expiration: ${JWT_EXPIRATION_MS:3600000} # 1 hour
+  refresh-expiration: ${JWT_REFRESH_EXPIRATION_MS:604800000} # 7 days
 
 logging:
   pattern:
