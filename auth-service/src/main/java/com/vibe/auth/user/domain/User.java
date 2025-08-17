@@ -1,3 +1,4 @@
+
 package com.vibe.auth.user.domain;
 
 import jakarta.persistence.*;
