@@ -1,3 +1,4 @@
+
 package com.vibe.auth.auth.application;
 
 import com.google.common.cache.CacheBuilder;
@@ -41,7 +42,8 @@ public class LoginAttemptService {
     public boolean isBlocked(String key) {
         try {
             return attemptsCache.get(key) >= MAX_ATTEMPT;
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             return false;
         }
     }

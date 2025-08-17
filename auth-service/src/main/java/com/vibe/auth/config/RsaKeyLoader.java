@@ -1,4 +1,3 @@
-
 package com.vibe.auth.config;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -50,25 +49,5 @@ public class RsaKeyLoader {
             }
         }
         return publicKey;
-    }
-
-    private PrivateKey loadPrivateKey(String pem) throws NoSuchAlgorithmException, InvalidKeySpecException {
-        pem = pem.replace("-----BEGIN PRIVATE KEY-----", "")
-                .replace("-----END PRIVATE KEY-----", "")
-                .replaceAll("\s", "");
-        byte[] decoded = Base64.getDecoder().decode(pem);
-        PKCS8EncodedKeySpec spec = new PKCS8EncodedKeySpec(decoded);
-        KeyFactory kf = KeyFactory.getInstance("RSA");
-        return kf.generatePrivate(spec);
-    }
-
-    private PublicKey loadPublicKey(String pem) throws NoSuchAlgorithmException, InvalidKeySpecException {
-        pem = pem.replace("-----BEGIN PUBLIC KEY-----", "")
-                .replace("-----END PUBLIC KEY-----", "")
-                .replaceAll("\s", "");
-        byte[] decoded = Base64.getDecoder().decode(pem);
-        X509EncodedKeySpec spec = new X509EncodedKeySpec(decoded);
-        KeyFactory kf = KeyFactory.getInstance("RSA");
-        return kf.generatePublic(spec);
     }
 }
