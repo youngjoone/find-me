@@ -1,3 +1,4 @@
+
 package com.vibe.auth.auth.dto;
 
 import jakarta.validation.constraints.Email;
@@ -7,11 +8,13 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class LoginRequest {
+public class RegisterRequest {
     @NotBlank
     @Email
     private String email;
 
     @NotBlank
     private String password;
+
+    private String nickname;
 }

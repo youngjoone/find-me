@@ -1,4 +1,3 @@
-
 package com.vibe.auth.config;
 
 import org.springframework.context.annotation.Bean;

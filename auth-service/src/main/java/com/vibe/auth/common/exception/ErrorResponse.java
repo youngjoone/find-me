@@ -1,4 +1,3 @@
-
 package com.vibe.auth.common.exception;
 
 import lombok.AllArgsConstructor;
