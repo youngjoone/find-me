@@ -1,4 +1,3 @@
-
 package com.vibe.auth.config;
 
 import lombok.Getter;
