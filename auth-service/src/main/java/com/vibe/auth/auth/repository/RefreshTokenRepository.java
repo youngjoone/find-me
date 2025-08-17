@@ -1,3 +1,4 @@
+
 package com.vibe.auth.auth.repository;
 
 import com.vibe.auth.auth.domain.RefreshToken;

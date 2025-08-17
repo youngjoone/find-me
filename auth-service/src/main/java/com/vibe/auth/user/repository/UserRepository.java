@@ -1,4 +1,3 @@
-
 package com.vibe.auth.user.repository;
 
 import com.vibe.auth.user.domain.User;
