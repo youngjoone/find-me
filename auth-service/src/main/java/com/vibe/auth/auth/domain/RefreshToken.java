@@ -1,3 +1,4 @@
+
 package com.vibe.auth.auth.domain;
 
 import com.vibe.auth.user.domain.User;
