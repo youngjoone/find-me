@@ -1,4 +1,3 @@
-
 package com.vibe.auth.auth.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
