@@ -1,3 +1,4 @@
+
 package com.vibe.auth.security;
 
 import com.vibe.auth.auth.jwt.JwtService;
