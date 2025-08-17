@@ -2,7 +2,7 @@ package com.vibe.auth.auth.presentation;
 
 import com.vibe.auth.auth.application.AuthService;
 import com.vibe.auth.auth.dto.LoginRequest;
-import com.vibe.auth.auth.dto.LoginResponse;
+import com.vibe.auth.auth.dto.TokenResponse;
 import com.vibe.auth.auth.dto.RegisterRequest;
 import com.vibe.auth.user.domain.User;
 import jakarta.validation.Valid;
@@ -27,9 +27,21 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginRequest request) {
-        LoginResponse response = authService.login(request);
+    public ResponseEntity<TokenResponse> login(@Valid @RequestBody LoginRequest request) {
+        TokenResponse response = authService.login(request);
         return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/refresh")
+    public ResponseEntity<TokenResponse> refresh(@Valid @RequestBody RefreshTokenRequest request) {
+        TokenResponse response = authService.refresh(request.getRefreshToken());
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<Void> logout(@Valid @RequestBody RefreshTokenRequest request) {
+        authService.logout(request.getRefreshToken());
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/health")

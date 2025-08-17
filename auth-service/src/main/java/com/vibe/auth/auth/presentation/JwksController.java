@@ -1,26 +1,29 @@
 package com.vibe.auth.auth.presentation;
 
-import com.vibe.auth.auth.jwt.JwtTokenProvider;
-import org.springframework.http.ResponseEntity;
+import com.nimbusds.jose.jwk.JWKSet;
+import com.nimbusds.jose.jwk.RSAKey;
+import com.vibe.auth.auth.jwt.JwtService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Map;
+import java.security.interfaces.RSAPublicKey;
+import java.util.Collections;
 
 @RestController
 public class JwksController {
 
-    private final JwtTokenProvider jwtTokenProvider;
+    private final JwtService jwtService;
 
-    public JwksController(JwtTokenProvider jwtTokenProvider) {
-        this.jwtTokenProvider = jwtTokenProvider;
+    public JwksController(JwtService jwtService) {
+        this.jwtService = jwtService;
     }
 
     @GetMapping("/.well-known/jwks.json")
-    public ResponseEntity<Map<String, Object>> getJwks() {
-        // This is a placeholder. In a real application, you would expose the public key in JWK format.
-        // For HS256, JWKS is not typically used as there's no public key to expose.
-        // The spec mentions RSA/ECDSA, which requires a different JWT implementation.
-        return ResponseEntity.ok(Map.of("keys", new Object[]{}));
+    public java.util.Map<String, Object> jwks() {
+        RSAPublicKey publicKey = (RSAPublicKey) jwtService.getVerificationKey();
+        RSAKey rsaKey = new RSAKey.Builder(publicKey)
+                .keyID(jwtService.getKid())
+                .build();
+        return new JWKSet(rsaKey).toJSONObject();
     }
 }
